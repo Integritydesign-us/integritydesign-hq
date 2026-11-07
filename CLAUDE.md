@@ -7,6 +7,7 @@
 - At session start, read `soul.md` — who I am at a human level. All copy, scripts, and content must sound like me: my words, my voice, not polished corporate language.
 - Write everything in my name per `voice.md`.
 - Target copy using `audience.md` (RTM, Crypto group, Integritydesign.us).
+- FORBIDDEN TERM: never use "Sovereign Citizen" (any case or variation) for any group, in any copy, file, process, search, or reply. Not in sources, links, or labels either.
 
 ## About me
 - Trade name: Integritydesign. Marketing company that goes against the grain.

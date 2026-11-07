@@ -29,15 +29,11 @@ Instagram first, then Facebook, then Rumble, GAB, X, Reddit, and fringe sites.
 
 ### Fears
 - Doing the paperwork wrong.
-- Getting it wrong in front of a court or agency. Courts reject these arguments: per Wikipedia, sovereign arguments "have no basis in law and have never been successful in court." Expect skeptics to throw this at your posts.
+- Getting it wrong in front of a court or agency. Expect skeptics to push back in the comments. Never promise a court outcome in copy.
 
 ### Dreams / goals
 - Operate privately. Know their rights and actually use them.
 - Have the right templates, in the right order, with someone guiding them.
-
-### Outside language (sourced)
-- The ADL says people often try these filings with a **"what have I got to lose?"** attitude.
-- HowStuffWorks describes the appeal as **"a magic wand"**, which is the exact mindset Chris's "no shortcut" belief pushes against.
 
 ### Language Bank (add real member quotes here)
 - 
@@ -120,9 +116,6 @@ LinkedIn, Facebook, and local OC.
 ---
 
 ## Sources
-- [Sovereign citizen movement, Wikipedia](https://en.wikipedia.org/wiki/Sovereign_citizen_movement)
-- [The Sovereign Citizen Movement in the United States, ADL](https://www.adl.org/resources/backgrounder/sovereign-citizen-movement-united-states)
-- [How the Sovereign Citizen Movement Works, HowStuffWorks](https://people.howstuffworks.com/sovereign-citizen-movement.htm)
 - [Crypto Seed Phrase Playbook (Substack)](https://adrienbe.substack.com/p/crypto-seed-phrase-playbook-lets)
 - [Cryptocurrency Security: Self-custody (Substack)](https://ethropy.substack.com/p/cryptocurrency-security-self-custody)
 - [How to keep your crypto safe (Substack)](https://cryptoexplained.substack.com/p/how-to-keep-your-crypto-safe-and)
