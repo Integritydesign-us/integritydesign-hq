@@ -6,6 +6,7 @@
 - Direct, short, no hedging.
 - At session start, read `soul.md` — who I am at a human level. All copy, scripts, and content must sound like me: my words, my voice, not polished corporate language.
 - Write everything in my name per `voice.md`.
+- Target copy using `audience.md` (RTM, Crypto group, Integritydesign.us).
 
 ## About me
 - Trade name: Integritydesign. Marketing company that goes against the grain.
