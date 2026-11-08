@@ -1,0 +1,31 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root{--deep:#030806;--base:#0A120E;--mid:#15241C;--light:#4E6B5A;--text:#E6EFE8;--accent:#3DFF7A;
+--serif:"Instrument Serif",Georgia,serif;--sans:"Archivo","Arial Narrow",Arial,sans-serif;--mono:"JetBrains Mono",monospace;--r:4px}
+*{box-sizing:border-box}html,body{margin:0;width:1920px;height:1080px;background:var(--deep);color:var(--text);overflow:hidden}
+.frame{position:relative;width:1920px;height:1080px;background:var(--deep)}
+.grid{position:absolute;inset:0;background-image:linear-gradient(var(--mid) 1px,transparent 1px),linear-gradient(90deg,var(--mid) 1px,transparent 1px);background-size:120px 120px;opacity:.28}
+.safe{position:absolute;left:0;top:0;width:960px;height:1080px;border-right:1px dashed var(--mid)}
+.safe span{position:absolute;left:60px;bottom:60px;font:400 32px var(--mono);letter-spacing:.14em;color:var(--mid);text-transform:uppercase}
+.tag{position:absolute;top:56px;font:400 32px var(--mono);letter-spacing:.14em;color:var(--light);text-transform:uppercase}
+.card{position:absolute;left:1040px;right:96px;top:50%;transform:translateY(-50%);background:var(--base);border:1px solid var(--mid);border-radius:var(--r);padding:72px 80px;display:flex;flex-direction:column;gap:32px}
+.kick{font:400 32px var(--mono);letter-spacing:.14em;color:var(--light);text-transform:uppercase}
+.head{font-family:var(--sans);font-stretch:62%;font-weight:900;text-transform:uppercase;font-size:160px;line-height:.88}
+.head em{font-family:var(--serif);font-style:italic;font-weight:400;text-transform:none;color:var(--accent);font-stretch:100%}
+.num{font-family:var(--sans);font-stretch:62%;font-weight:900;font-size:320px;line-height:.82;color:var(--accent)}
+.sub{font-family:var(--serif);font-style:italic;font-size:72px;line-height:1.05}
+ul{list-style:none;margin:0;padding:0;display:grid;gap:36px}
+li{display:flex;gap:40px;align-items:baseline;font-family:var(--sans);font-weight:700;font-stretch:75%;font-size:80px;text-transform:uppercase;line-height:1}
+li span{font:400 32px var(--mono);color:var(--accent)}
+</style></head><body><div class="frame"><div class="grid"></div><div class="safe"><span>Face zone // keep clear</span></div>
+<div class="tag" style="left:1040px" id="tl"></div><div class="tag" style="right:96px" id="tr"></div>
+<div class="card" id="card"></div></div>
+<script>
+const v=new URLSearchParams(location.search).get('v');
+const C={
+ title:['REC // 001','SIGNAL: STRONG','<div class="kick">Transmission 07</div><div class="head">Quit the <em>loop</em></div>'],
+ number:['DATA // 002','DAYS','<div class="num">47</div><div class="sub">days until the Velmora reset</div>'],
+ list:['LIST // 003','N-F-A','<div class="sub" style="font-size:60px;color:var(--light)">The Kordex method,..</div><ul><li><span>01</span>Map the grid</li><li><span>02</span>Cut the cord</li><li><span>03</span>Run your own</li></ul>']};
+const [a,b,h]=C[v];tl.textContent=a;tr.textContent=b;card.innerHTML=h;
+</script></body></html>
