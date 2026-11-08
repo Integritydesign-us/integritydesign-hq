@@ -1,0 +1,247 @@
+<title>Integritydesign Video System</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a dark control-room board. Spec rows on a strict grid, giant type, tiny system labels in the margins. */
+:root {
+  color-scheme: dark;
+  /* Palette: 5 green-biased neutrals + ONE accent */
+  --deep:   #030806;  /* deepest: video background, letterbox */
+  --base:   #0A120E;  /* base: card fill */
+  --mid:    #15241C;  /* mid: borders, dividers, inactive */
+  --light:  #4E6B5A;  /* light: labels, secondary text, grid lines */
+  --text:   #E6EFE8;  /* text: headlines and body */
+  --accent: #3DFF7A;  /* accent: ONE key word, number, or mark per frame */
+
+  --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+  --sans:  "Archivo", "Arial Narrow", Helvetica, Arial, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, Menlo, Consolas, monospace;
+
+  --radius: 4px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-in: 900ms;
+  --dur-out: 600ms;
+}
+body { background: var(--deep); color: var(--text); font-family: var(--sans); font-size: 16px; line-height: 1.5; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-block: 48px 96px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 72px; }
+.label { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--light); }
+.label b { color: var(--accent); font-weight: 600; }
+h1, h2 { margin: 0; text-wrap: balance; }
+header { display: grid; gap: 20px; border-bottom: 1px solid var(--mid); padding-bottom: 40px; }
+header .row { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+header h1 { font-family: var(--sans); font-stretch: 62%; font-weight: 900; text-transform: uppercase;
+  font-size: clamp(56px, 11vw, 132px); line-height: .88; letter-spacing: -.01em; }
+header h1 em { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; color: var(--accent); font-stretch: 100%; letter-spacing: 0; }
+header p { margin: 0; max-width: 60ch; color: var(--light); }
+section { display: grid; gap: 24px; }
+.sec-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; border-bottom: 1px solid var(--mid); padding-bottom: 12px; }
+.sec-head h2 { font-family: var(--sans); font-stretch: 75%; font-weight: 800; text-transform: uppercase; font-size: 28px; letter-spacing: .01em; }
+
+/* swatches */
+.swatches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px; }
+.sw { display: grid; gap: 10px; min-width: 0; }
+.chip { aspect-ratio: 3/4; border-radius: var(--radius); border: 1px solid var(--mid); }
+.sw .name { font-weight: 700; font-size: 14px; }
+.sw .hex { font-family: var(--mono); font-size: 13px; color: var(--text); }
+.sw .use { font-size: 12px; color: var(--light); line-height: 1.4; }
+@media (max-width: 760px) { .swatches { grid-template-columns: repeat(3, 1fr); } }
+
+/* type */
+.type { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.face { border: 1px solid var(--mid); border-radius: var(--radius); padding: 28px; display: grid; gap: 20px; align-content: start; min-width: 0; }
+.face .lic { font-size: 13px; color: var(--light); }
+.face .lic strong { color: var(--text); font-weight: 600; }
+.serif-head { font-family: var(--serif); font-size: clamp(48px, 7vw, 80px); line-height: .95; }
+.serif-head i { color: var(--accent); }
+.sans-head { font-family: var(--sans); font-stretch: 62%; font-weight: 900; text-transform: uppercase; font-size: clamp(48px, 7vw, 80px); line-height: .9; }
+.serif-label { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--text); }
+.sans-label { font-family: var(--sans); font-weight: 700; font-size: 14px; letter-spacing: .14em; text-transform: uppercase; }
+@media (max-width: 760px) { .type { grid-template-columns: 1fr; } }
+
+/* scale table */
+.scale-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 560px; }
+th, td { text-align: left; padding: 12px 10px; border-bottom: 1px solid var(--mid); vertical-align: baseline; }
+th { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--light); font-weight: 400; }
+td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; color: var(--accent); white-space: nowrap; }
+td.use { color: var(--light); }
+
+/* example cards: 16:9 video frames */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 900px) { .cards { grid-template-columns: 1fr; } }
+.frame { position: relative; aspect-ratio: 16/9; max-width: 100%; background: var(--deep); border: 1px solid var(--mid); border-radius: var(--radius); overflow: hidden; container-type: inline-size; }
+.frame::before { content: ""; position: absolute; inset: 0;
+  background-image: linear-gradient(var(--mid) 1px, transparent 1px), linear-gradient(90deg, var(--mid) 1px, transparent 1px);
+  background-size: 8cqw 8cqw; opacity: .35; }
+.card { position: absolute; inset: 9cqw 7cqw; background: var(--base); border: 1px solid var(--mid); border-radius: var(--radius);
+  padding: 5cqw 6cqw; display: flex; flex-direction: column; justify-content: center; gap: 2cqw; }
+.tag { position: absolute; top: 3cqw; left: 3cqw; font-family: var(--mono); font-size: 2.4cqw; letter-spacing: .14em; color: var(--light); text-transform: uppercase; }
+.tag.r { left: auto; right: 3cqw; }
+.c-head { font-family: var(--sans); font-stretch: 62%; font-weight: 900; text-transform: uppercase; font-size: 11cqw; line-height: .9; }
+.c-head em { font-family: var(--serif); font-style: italic; font-weight: 400; text-transform: none; color: var(--accent); font-stretch: 100%; }
+.c-kicker { font-family: var(--mono); font-size: 2.6cqw; letter-spacing: .14em; color: var(--light); text-transform: uppercase; }
+.c-num { font-family: var(--sans); font-stretch: 62%; font-weight: 900; font-size: 22cqw; line-height: .85; color: var(--accent); font-variant-numeric: tabular-nums; }
+.c-numlabel { font-family: var(--serif); font-style: italic; font-size: 5.4cqw; line-height: 1.1; }
+.c-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 2.2cqw; }
+.c-list li { display: flex; gap: 3cqw; align-items: baseline; font-family: var(--sans); font-weight: 700; font-stretch: 75%; font-size: 5.4cqw; text-transform: uppercase; line-height: 1; }
+.c-list li span { font-family: var(--mono); font-weight: 400; font-size: 2.6cqw; color: var(--accent); }
+.c-list-title { font-family: var(--serif); font-style: italic; font-size: 5cqw; color: var(--light); }
+.cap { font-size: 13px; color: var(--light); margin-top: 10px; }
+
+/* motion */
+.anim .card { animation: rise var(--dur-in) var(--ease) both; }
+.anim .card > * { animation: rise var(--dur-in) var(--ease) both; }
+.anim .card > *:nth-child(1) { animation-delay: 150ms; }
+.anim .card > *:nth-child(2) { animation-delay: 300ms; }
+.anim .card > *:nth-child(3) { animation-delay: 450ms; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+@media (prefers-reduced-motion: reduce) { .anim .card, .anim .card > * { animation: none; } }
+
+.motion { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+@media (max-width: 760px) { .motion { grid-template-columns: 1fr; } }
+.motion dl { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 12px 20px; font-size: 14px; }
+.motion dt { font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--light); padding-top: 3px; }
+.motion dd { margin: 0; min-width: 0; }
+.motion dd code { font-family: var(--mono); color: var(--accent); font-size: 13px; }
+.curve { border: 1px solid var(--mid); border-radius: var(--radius); padding: 20px; display: grid; gap: 12px; }
+.curve svg { width: 100%; height: auto; }
+button { justify-self: start; font-family: var(--sans); font-weight: 700; font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--deep); background: var(--accent); border: 0; border-radius: var(--radius); padding: 12px 18px; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--text); outline-offset: 3px; }
+footer { border-top: 1px solid var(--mid); padding-top: 20px; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="row"><span class="label">SYS_01 // Integritydesign</span><span class="label">Video graphics <b>v1.0</b></span></div>
+    <h1>Design is <em>rebellion.</em></h1>
+    <p>The rules for every title card, number callout and list on screen. Dark base, one green, big type, small system labels. If a frame has two accents, delete one.</p>
+  </header>
+
+  <section>
+    <div class="sec-head"><h2>Palette</h2><span class="label">6 tones // <b>1 accent</b></span></div>
+    <div class="swatches">
+      <div class="sw"><div class="chip" style="background:var(--deep)"></div><div class="name">Deepest</div><div class="hex">#030806</div><div class="use">Frame background, letterbox bars</div></div>
+      <div class="sw"><div class="chip" style="background:var(--base)"></div><div class="name">Base</div><div class="hex">#0A120E</div><div class="use">Card fill</div></div>
+      <div class="sw"><div class="chip" style="background:var(--mid)"></div><div class="name">Mid</div><div class="hex">#15241C</div><div class="use">Borders, grid, dividers</div></div>
+      <div class="sw"><div class="chip" style="background:var(--light)"></div><div class="name">Light</div><div class="hex">#4E6B5A</div><div class="use">Labels, secondary text</div></div>
+      <div class="sw"><div class="chip" style="background:var(--text)"></div><div class="name">Text</div><div class="hex">#E6EFE8</div><div class="use">Headlines, body</div></div>
+      <div class="sw"><div class="chip" style="background:var(--accent)"></div><div class="name">Accent</div><div class="hex">#3DFF7A</div><div class="use">One word, number or mark per frame</div></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Typefaces</h2><span class="label">Both free for commercial use</span></div>
+    <div class="type">
+      <div class="face">
+        <span class="label">Sans // Archivo, condensed</span>
+        <div class="sans-head">Break the grid</div>
+        <div class="sans-label">Label size // escape the 9-5</div>
+        <div class="lic"><strong>SIL Open Font License 1.1.</strong> Free for commercial use in video, print, web and logos. Free on Google Fonts. You can't sell the font file itself.</div>
+      </div>
+      <div class="face">
+        <span class="label">Serif // Instrument Serif, italic</span>
+        <div class="serif-head">Do your <i>OWN</i> thing</div>
+        <div class="serif-label">Label size // the matrix has you</div>
+        <div class="lic"><strong>SIL Open Font License 1.1.</strong> Same terms: free commercial use, free on Google Fonts. It's also the serif your video-editor skill already loads.</div>
+      </div>
+    </div>
+    <p class="label">Small system labels use JetBrains Mono (also OFL 1.1). It's the only extra face.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Text sizes</h2><span class="label">On a 1920 × 1080 frame</span></div>
+    <div class="scale-wrap">
+      <table>
+        <thead><tr><th>Role</th><th>Face</th><th>Size</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>Big number</td><td>Archivo 900, condensed</td><td class="num">320 px</td><td class="use">One stat, in accent</td></tr>
+          <tr><td>Headline</td><td>Archivo 900, condensed, caps</td><td class="num">160 px</td><td class="use">Title card, 1–4 words</td></tr>
+          <tr><td>Accent word</td><td>Instrument Serif italic</td><td class="num">160 px</td><td class="use">One word inside a headline</td></tr>
+          <tr><td>List item</td><td>Archivo Bold, caps</td><td class="num">80 px</td><td class="use">3–4 items max</td></tr>
+          <tr><td>Subline</td><td>Instrument Serif italic</td><td class="num">72 px</td><td class="use">Under a number or headline</td></tr>
+          <tr><td>Caption</td><td>Archivo Bold</td><td class="num">64 px</td><td class="use">Key words only, lower middle</td></tr>
+          <tr><td>System label</td><td>JetBrains Mono, caps, +14% spacing</td><td class="num">32 px</td><td class="use">Corner tags, kickers</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="label">Card rounding: <b>4 px</b> everywhere. Sharp enough to feel technical, soft enough to feel finished.</p>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Example cards</h2><span class="label">16:9 // <b>replay below</b></span></div>
+    <div class="cards anim" id="cards">
+      <div>
+        <div class="frame"><span class="tag">REC // 001</span><span class="tag r">SIGNAL: STRONG</span>
+          <div class="card">
+            <div class="c-kicker">Transmission 01</div>
+            <div class="c-head">Escape the <em>matrix</em></div>
+          </div>
+        </div>
+        <div class="cap">Headline card</div>
+      </div>
+      <div>
+        <div class="frame"><span class="tag">DATA // 002</span><span class="tag r">$ / MO</span>
+          <div class="card">
+            <div class="c-num">$22</div>
+            <div class="c-numlabel">a month to stop being a "GREAT" employee</div>
+          </div>
+        </div>
+        <div class="cap">Big number card</div>
+      </div>
+      <div>
+        <div class="frame"><span class="tag">LIST // 003</span><span class="tag r">N-F-A</span>
+          <div class="card">
+            <div class="c-list-title">Before your first trade,..</div>
+            <ul class="c-list">
+              <li><span>01</span>Get a wallet</li>
+              <li><span>02</span>Write the seed down</li>
+              <li><span>03</span>Send a test amount</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cap">Short list card</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><h2>Motion</h2><span class="label">Slow and soft // <b>one ease</b></span></div>
+    <div class="motion">
+      <dl>
+        <dt>Ease</dt><dd><code>cubic-bezier(0.22, 1, 0.36, 1)</code>. Starts quick, then glides to a stop. Used for every move, no exceptions.</dd>
+        <dt>In</dt><dd><code>900 ms</code>. Fade up 14 px from below with a light blur that clears.</dd>
+        <dt>Out</dt><dd><code>600 ms</code>. Same curve, reversed: fade down and blur out.</dd>
+        <dt>Stagger</dt><dd><code>150 ms</code> between pieces: card, then kicker, then headline.</dd>
+        <dt>Hold</dt><dd>At least <code>2 s</code> fully still before it leaves.</dd>
+        <dt>Never</dt><dd>Bounces, spins, zoom punches, or two things moving in different ways.</dd>
+      </dl>
+      <div class="curve">
+        <span class="label">Speed over time</span>
+        <svg viewBox="0 0 220 140" role="img" aria-label="Ease curve: fast start, long soft stop">
+          <rect x="0" y="0" width="220" height="140" fill="none"/>
+          <line x1="20" y1="120" x2="210" y2="120" stroke="var(--mid)" stroke-width="1"/>
+          <line x1="20" y1="10" x2="20" y2="120" stroke="var(--mid)" stroke-width="1"/>
+          <path d="M20 120 C 61.8 10, 88.4 10, 210 10" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+          <text x="20" y="136" fill="var(--light)" font-family="JetBrains Mono, monospace" font-size="9">START</text>
+          <text x="180" y="136" fill="var(--light)" font-family="JetBrains Mono, monospace" font-size="9">END</text>
+        </svg>
+        <button id="replay" type="button">Replay cards</button>
+      </div>
+    </div>
+  </section>
+
+  <footer><span class="label">Integritydesign // do your OWN thing</span><span class="label">Fonts: OFL 1.1 // Google Fonts</span></footer>
+</div>
+
+<script>
+document.getElementById('replay').addEventListener('click', function () {
+  var c = document.getElementById('cards');
+  c.classList.remove('anim'); void c.offsetWidth; c.classList.add('anim');
+  c.scrollIntoView({ behavior: 'smooth', block: 'center' });
+});
+</script>
