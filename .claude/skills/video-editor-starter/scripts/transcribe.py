@@ -27,7 +27,9 @@ if shutil.which("whisper"):
                 words.append({"w": x["word"].strip(), "s": round(x["start"], 3), "e": round(x["end"], 3)})
 elif have("faster_whisper"):
     from faster_whisper import WhisperModel
-    segs, _ = WhisperModel(a.model, compute_type="int8").transcribe(str(wav), language="en", word_timestamps=True)
+    import wave, numpy as np          # read the 16 kHz mono wav ourselves; avoids PyAV version clashes
+    with wave.open(str(wav)) as f: pcm = np.frombuffer(f.readframes(f.getnframes()), np.int16).astype(np.float32) / 32768
+    segs, _ = WhisperModel(a.model, compute_type="int8").transcribe(pcm, language="en", word_timestamps=True)
     for seg in segs:
         for x in seg.words: words.append({"w": x.word.strip(), "s": round(x.start, 3), "e": round(x.end, 3)})
 else:
