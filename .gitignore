@@ -1,2 +1,3 @@
 projects/*/work/audio.wav
 projects/*/*.mp3
+__pycache__/
